@@ -36,6 +36,9 @@ public class CurrencyConverterActivityImpl implements CurrencyConverterActivity 
 	@Inject
 	CurrencyConvector currencyConvector;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public CurrencyConverterPageData getValidationFailedData(String userName) {
 		List<CurrencyEnum> currencyList = Arrays.asList(CurrencyEnum.values());
@@ -45,10 +48,14 @@ public class CurrencyConverterActivityImpl implements CurrencyConverterActivity 
 		CurrencyConverterPageData currencyConverterPageData = new CurrencyConverterPageData();
 		currencyConverterPageData.setCurrencyList(currencyList);
 		currencyConverterPageData.setHistoryList(listOfHistryTranscation);
+		currencyConverterPageData.setUserName(userName);
 
 		return currencyConverterPageData;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public FormErrorMessages validateCurrencyData(CurrencyConvertData currencyConvertData) {
 		FormErrorMessages formErrorMessages = new FormErrorMessages();
@@ -68,6 +75,9 @@ public class CurrencyConverterActivityImpl implements CurrencyConverterActivity 
 		return formErrorMessages;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void persistCurrencyConversionData(BigDecimal conversionResult, CurrencyConvertData currencyConvertData,
 			String userName) {
@@ -82,6 +92,9 @@ public class CurrencyConverterActivityImpl implements CurrencyConverterActivity 
 		currencyTransactionHistoryService.save(currencyTransactionHistory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public CurrencyConverterPageData extractCurrencyConverterPageData(BigDecimal conversionResult,
 			CurrencyConvertData currencyConvertData, String userName) {
@@ -96,9 +109,13 @@ public class CurrencyConverterActivityImpl implements CurrencyConverterActivity 
 		currencyConverterPageData.setSourceCurrency(currencyConvertData.getSourceCurrency());
 		currencyConverterPageData.setDestinationCurrency(currencyConvertData.getDestinationCurrency());
 		currencyConverterPageData.setInputAmount(currencyConvertData.getAmount());
+		currencyConverterPageData.setUserName(userName);
 		return currencyConverterPageData;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public BigDecimal getResult(CurrencyConvertData currencyConvertData) {
 		Calendar cal = Calendar.getInstance();
@@ -112,6 +129,9 @@ public class CurrencyConverterActivityImpl implements CurrencyConverterActivity 
 				CurrencyEnum.valueOf(currencyConvertData.getDestinationCurrency()), cal);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public CurrencyConverterPageData getCurrencyConverterValidationFailedData(String userName, FormErrorMessages formErrorMessages) {
 		List<CurrencyEnum> currencyList = Arrays.asList(CurrencyEnum.values());
@@ -122,7 +142,20 @@ public class CurrencyConverterActivityImpl implements CurrencyConverterActivity 
 		currencyConverterPageData.setCurrencyList(currencyList);
 		currencyConverterPageData.setMessage(formErrorMessages);
 		currencyConverterPageData.setHistoryList(listOfHistryTranscation);
+		currencyConverterPageData.setUserName(userName);
 		
+		return currencyConverterPageData;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CurrencyConverterPageData getDefaultPageData(String userName) {
+		List<CurrencyEnum> currencyList = Arrays.asList(CurrencyEnum.values());
+		CurrencyConverterPageData currencyConverterPageData = new CurrencyConverterPageData();
+		currencyConverterPageData.setCurrencyList(currencyList);
+		currencyConverterPageData.setUserName(userName);
 		return currencyConverterPageData;
 	}
 

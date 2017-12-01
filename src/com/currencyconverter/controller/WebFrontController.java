@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import com.currencyconverter.action.CurrencyConverterAction;
+import com.currencyconverter.action.TransactionHistoryAction;
 import com.currencyconverter.action.LoginAction;
 import com.currencyconverter.action.RegisterAction;
 import com.currencyconverter.enums.CurrencyConversionType;
@@ -21,6 +22,7 @@ import com.currencyconverter.model.RegisterFormData;
 import com.currencyconverter.model.UserData;
 import com.currencyconverter.view.CurrencyConverterPageData;
 import com.currencyconverter.view.FormErrorMessages;
+import com.currencyconverter.view.TransactionHistoryPageData;
 
 /**
  * @author abhishek.kotalwar
@@ -33,6 +35,8 @@ public class WebFrontController {
 	private static final String VERIFY_LOGIN_URL = "/loginVerify";
 	private static final String VERIFY_REGISTRATION_URL = "/registrationVerify";
 	private static final String CURRENCY_CONVERTER_URL = "/currencyconverter";
+	private static final String TRANSACTION_HISTROY_URL = "/showtransactionhistory";
+	private static final String CURRENCY_CONVERTER_HOME  = "/currencyconverterhome";
 	private static final String LOG_OUT_URL = "/logout";
 
 	@Inject
@@ -41,23 +45,60 @@ public class WebFrontController {
 	private RegisterAction registerAction;
 	@Inject
 	private CurrencyConverterAction currencyConverterAction;
+	@Inject
+	private TransactionHistoryAction transactionHistoryAction;
+	
 
+	/**
+	 * @return
+	 */
 	@RequestMapping(LOGIN_URL)
 	public ModelAndView userLogin() {
 		return new ModelAndView("login");
 	}
+	
+	/**
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(CURRENCY_CONVERTER_HOME)
+	public ModelAndView currencyConverterHome(HttpSession session) {
+		String userName = (String) session.getAttribute("userName");
 
+		if (null == userName) {
+			return new ModelAndView("sessionTimeout", "errorMessage", "Sesssion expired, please login again.");
+		} else {
+			CurrencyConverterPageData currencyConverterPageData = currencyConverterAction.getDefaultPageData(userName);
+			return new ModelAndView("currencyConverterForm", "pageData", currencyConverterPageData);
+		}
+	}
+
+	/**
+	 * @param session
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(LOG_OUT_URL)
 	public ModelAndView userLogout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		loginAction.userLogOut(session, response);
 		return new ModelAndView("login", "message", "Loged out sccessfully.");
 	}
 
+	/**
+	 * @return
+	 */
 	@RequestMapping(REGISTER_URL)
 	public ModelAndView userRegistration() {
 		return new ModelAndView("registration");
 	}
 
+	/**
+	 * @param currencyConvertData
+	 * @param result
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(CURRENCY_CONVERTER_URL)
 	public ModelAndView currencyConverter(
 			@Valid @ModelAttribute("currencyConvertData") CurrencyConvertData currencyConvertData, BindingResult result,
@@ -65,7 +106,7 @@ public class WebFrontController {
 		String userName = (String) session.getAttribute("userName");
 
 		if (null == userName) {
-			return new ModelAndView("sessionTimeout", "errorMessage", "Sesssion Expired Please login again.");
+			return new ModelAndView("sessionTimeout", "errorMessage", "Sesssion expired, please login again.");
 		} else {
 			if (result.hasErrors()) {
 				CurrencyConverterPageData currencyConverterPageData = currencyConverterAction
@@ -90,6 +131,13 @@ public class WebFrontController {
 		}
 	}
 
+	/**
+	 * @param loginFormData
+	 * @param result
+	 * @param session
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(VERIFY_LOGIN_URL)
 	public ModelAndView handleLoginForm(@Valid @ModelAttribute("loginFormData") LoginFormData loginFormData,
 			BindingResult result, HttpSession session, HttpServletRequest request) {
@@ -124,8 +172,24 @@ public class WebFrontController {
 				return new ModelAndView("registrationFailedDataError", "errorMessage", formErrorMessages);
 			} else {
 				registerAction.registerUser(registerFormData);
-				return new ModelAndView("login", "message", "Registration success.");
+				return new ModelAndView("login", "message", "Registration success, Please login.");
 			}
+		}
+	}
+	
+	/**
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(TRANSACTION_HISTROY_URL)
+	public ModelAndView showTrasactionHistory(HttpSession session) {
+		String userName = (String) session.getAttribute("userName");
+
+		if (null == userName) {
+			return new ModelAndView("sessionTimeout", "errorMessage", "Sesssion expired, please login again.");
+		} else {
+			TransactionHistoryPageData transactionHistoryPageData = transactionHistoryAction.getTransactionHistoryPageDataForUser(userName);
+			return new ModelAndView("transactionHistory", "pageData", transactionHistoryPageData);
 		}
 	}
 }

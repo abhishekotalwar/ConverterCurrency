@@ -71,4 +71,12 @@ public interface CurrencyConvertMediator {
 	 */
 	public CurrencyConverterPageData getCurrencyConverterValidationFailedData(String userName, FormErrorMessages formErrorMessages);
 
+	/**
+	 * This method will return the default data for page.
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	public CurrencyConverterPageData getDefaultPageData(String userName);
+
 }

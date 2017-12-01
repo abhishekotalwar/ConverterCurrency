@@ -70,4 +70,12 @@ public class CurrencyConverterMediatorImpl implements CurrencyConvertMediator {
 	public CurrencyConverterPageData getCurrencyConverterValidationFailedData(String userName, FormErrorMessages formErrorMessages) {
 		return currencyConverterActivity.getCurrencyConverterValidationFailedData(userName, formErrorMessages);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CurrencyConverterPageData getDefaultPageData(String userName) {
+		return currencyConverterActivity.getDefaultPageData(userName);
+	}
 }

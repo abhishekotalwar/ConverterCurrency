@@ -15,6 +15,7 @@ public class NameValidator implements ConstraintValidator<IsValidName, String> {
 	private String messageNotEmpty;
 	private String messageLength;
 	private String wrongPatternValue;
+	private String inputValue = null;
 
 	public void initialize(IsValidName field) {
 		notEmpty = field.notEmpty();
@@ -26,23 +27,37 @@ public class NameValidator implements ConstraintValidator<IsValidName, String> {
 	}
 
 	public boolean isValid(String value, ConstraintValidatorContext context) {
+		inputValue = value;
 		context.disableDefaultConstraintViolation();
-		if (notEmpty && value.isEmpty()) {
+		if (null == inputValue) {
 			context.buildConstraintViolationWithTemplate(messageNotEmpty).addConstraintViolation();
 			return false;
-		}
-
-		if (!(value.length() > min || value.length() < max)) {
+		} else if (notEmpty && inputValue.isEmpty()) {
+			context.buildConstraintViolationWithTemplate(messageNotEmpty).addConstraintViolation();
+			return false;
+		} else if (!(inputValue.length() > min || inputValue.length() < max)) {
 			context.buildConstraintViolationWithTemplate(messageLength).addConstraintViolation();
 			return false;
-		}
-
-		if (!value.matches("^[a-z,A-Z]+")) {
+		} else if (!inputValue.matches("^[a-z,A-Z]+")) {
 			context.buildConstraintViolationWithTemplate(wrongPatternValue).addConstraintViolation();
 			return false;
+		} else {
+			return true;
 		}
-
-		return true;
 	}
 
+	/**
+	 * @return the inputValue
+	 */
+	public String getInputValue() {
+		return inputValue;
+	}
+
+	/**
+	 * @param inputValue
+	 *            the inputValue to set
+	 */
+	public void setInputValue(String inputValue) {
+		this.inputValue = inputValue;
+	}
 }

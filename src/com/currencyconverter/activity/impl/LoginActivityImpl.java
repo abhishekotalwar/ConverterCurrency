@@ -60,6 +60,7 @@ public class LoginActivityImpl implements LoginActivity {
 		CurrencyConverterPageData currencyConverterPageData = new CurrencyConverterPageData();
 		currencyConverterPageData.setCurrencyList(currencyList);
 		currencyConverterPageData.setHistoryList(listOfHistryTranscation);
+		currencyConverterPageData.setUserName(loginFormData.getUserName());
 		return currencyConverterPageData;
 	}
 

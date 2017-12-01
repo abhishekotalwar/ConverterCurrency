@@ -21,6 +21,7 @@ public class CurrencyConverterPageData {
 	private String sourceCurrency;
 	private String destinationCurrency;
 	private BigDecimal inputAmount;
+	private String userName;
 
 	/**
 	 * @return the sourceCurrency
@@ -125,6 +126,21 @@ public class CurrencyConverterPageData {
 	 */
 	public void setInputAmount(BigDecimal inputAmount) {
 		this.inputAmount = inputAmount;
+	}
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * @param userName
+	 *            the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

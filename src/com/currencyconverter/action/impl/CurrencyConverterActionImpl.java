@@ -72,4 +72,12 @@ public class CurrencyConverterActionImpl implements CurrencyConverterAction {
 	public CurrencyConverterPageData getCurrencyConverterValidationFailedData(String userName, FormErrorMessages formErrorMessages) {
 		return currencyConvertMediator.getCurrencyConverterValidationFailedData(userName, formErrorMessages);	
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CurrencyConverterPageData getDefaultPageData(String userName) {
+		return currencyConvertMediator.getDefaultPageData(userName);
+	}
 }
