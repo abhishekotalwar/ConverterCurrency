@@ -21,7 +21,7 @@ public interface RegisterMediator {
 	public FormErrorMessages validateRegistrationData(RegisterFormData registerFormData);
 
 	/**
-	 * This method will used to register user date
+	 * This method will used to register user data
 	 * 
 	 * @param registerFormData
 	 */

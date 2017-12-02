@@ -17,7 +17,7 @@ public interface TransactionHistoryAction {
 	 * @param userName
 	 * @return
 	 */
-	TransactionHistoryPageData getTransactionHistoryPageDataForUser(String userName);
+	public TransactionHistoryPageData getTransactionHistoryPageDataForUser(String userName);
 
 
 }
