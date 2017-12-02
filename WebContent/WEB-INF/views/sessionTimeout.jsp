@@ -51,6 +51,12 @@ td {
 		<header>
    			<h1>Currency Converter</h1>
 		</header>
+		<nav>
+  			<ul>
+    			<li><b><a href="register">Sign up</a></b></li>
+  			</ul>
+		</nav>
+		
 		<article>
 			<p align="center"><b><font color="red">${errorMessage}</font></b></p><br/>
 			<form action="loginVerify" method="post" >
@@ -65,7 +71,7 @@ td {
 					</tr>
 					<tr>
 						<td align="center"><input type="submit" name="Login" value="Login"/> </td>     
-						<td align="left"><b><a href="register">Sign up</a></b></td>
+						<td> </td>
 					</tr>
 				</table>
 			</form>
