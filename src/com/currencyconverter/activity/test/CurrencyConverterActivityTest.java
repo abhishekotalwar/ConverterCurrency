@@ -126,6 +126,12 @@ public class CurrencyConverterActivityTest {
 
 		assertNotNull(currencyConverterActivity.getCurrencyConverterValidationFailedData(userName, formErrorMessages));
 	}
+	
+	@Test
+	public void testGetDefaultPageData() {
+		String userName = "testUser";
+		assertNotNull(currencyConverterActivity.getDefaultPageData(userName));
+	}
 
 	private CurrencyConvertData getCurrencyConvertObjectWithData() {
 		BigDecimal conversionResult = BigDecimal.ONE;
